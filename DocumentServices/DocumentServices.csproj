@@ -7,11 +7,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Licences\Intalio.Core.Aspose.Total.Product.Family 1.lic" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Properties\launchSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Licences\Intalio.Core.Aspose.Total.Product.Family 1.lic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="23.8.0" />
+    <PackageReference Include="Aspose.Imaging" Version="23.8.0" />
+    <PackageReference Include="Aspose.PDF" Version="23.8.0" />
+    <PackageReference Include="Aspose.Words" Version="23.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.25" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
 </Project>

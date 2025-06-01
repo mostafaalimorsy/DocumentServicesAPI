@@ -1,5 +1,5 @@
-﻿/*
- * using DocumentService.DTOs;
+﻿
+using DocumentService.DTOs;
 using DocumentService.Interface.FileService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace DocumentService.Controllers.FileService
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
       
 
-        public async Task<IActionResult> GetFileAsPdf([FromBody] GetFileAsPdfRequest request)
+        public async Task<IActionResult> GetFileAsPdf([FromQuery] GetFileAsPdfRequest request)
         {
 
             if (!ModelState.IsValid)
@@ -34,13 +34,18 @@ namespace DocumentService.Controllers.FileService
             try
             {
                 var (fileBytes, contentType) = await _fileService.GetFileAsPdfAsync(request.FileName);
+                string outputFileName = Path.GetFileNameWithoutExtension(request.FileName) + ".pdf";
+                string outputPath = Path.Combine("wwwroot", "files", outputFileName);
+                System.IO.File.WriteAllBytes(outputPath, fileBytes);
 
+                var fileUrl = $"{Request.Scheme}://{Request.Host}/files/{outputFileName}";
                 var response = new FileAsPdfResponse
                 {
                     OriginalFileName = request.FileName,
                     ConvertedFileName = Path.GetFileNameWithoutExtension(request.FileName) + ".pdf",
                     ContentType = contentType,
-                   
+                    FileBytes = Convert.ToBase64String(fileBytes),
+                    FileUrl = fileUrl
                 };
 
                 return Ok(response);
@@ -61,4 +66,3 @@ namespace DocumentService.Controllers.FileService
     }
 
 }
-*/

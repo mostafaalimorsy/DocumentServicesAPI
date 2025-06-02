@@ -1,6 +1,7 @@
 ﻿
 using DocumentService.DTOs;
 using DocumentService.Interface.FileService;
+using DocumentServices.DTOs.SendFile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

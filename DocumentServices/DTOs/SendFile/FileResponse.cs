@@ -1,4 +1,4 @@
-﻿namespace DocumentService.Controllers.FileService
+﻿namespace DocumentServices.DTOs.SendFile
 {
     public class FileAsPdfResponse
     {

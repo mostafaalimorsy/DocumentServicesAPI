@@ -1,6 +1,8 @@
 ﻿using DocumentService.Interface;
 using DocumentService.Models;
+using DocumentService.Service;
 using DocumentService.Services;
+using DocumentServices.Interface.GetFIleServiceInterface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,6 +25,7 @@ namespace DocumentService.Extensions
             services.AddSwaggerGen();
             services.Configure<IAMSettings>(configuration.GetSection("IAM"));
             services.Configure<AuthConfiguration>(configuration.GetSection("AuthConfiguration"));
+            services.AddScoped<IAnnotatedFileService, AnnotatedFileService>();
 
             //services.Configure<JwtSettings>(
             //configuration.GetSection("Jwt"));

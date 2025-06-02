@@ -1,4 +1,4 @@
-﻿namespace DocumentService.Controllers.FileService
+﻿namespace DocumentServices.DTOs.SendFile
 {
     using System.ComponentModel.DataAnnotations;
 

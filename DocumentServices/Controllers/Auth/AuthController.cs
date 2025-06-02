@@ -3,7 +3,7 @@ using DocumentService.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DocumentService.Controllers
+namespace DocumentServices.Controllers.Auth
 {
 
     [ApiController]

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentService.Controllers.FileService
 {
-
+    [Authorize(AuthenticationSchemes = "IamScheme")]
     [ApiController]
     [Route("api/[controller]")]
     public class FileController : ControllerBase
@@ -18,7 +18,7 @@ namespace DocumentService.Controllers.FileService
         {
             _fileService = fileService;
         }
-
+        [Authorize(AuthenticationSchemes = "IamScheme")]
         [HttpGet("pdf")]
         [ProducesResponseType(typeof(FileAsPdfResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
@@ -30,7 +30,11 @@ namespace DocumentService.Controllers.FileService
 
             if (!ModelState.IsValid)
                 return BadRequest(new ErrorResponse { Error = "ValidationError", Details = "the token is invalid" });
-
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return BadRequest(new ErrorResponse { Error = "ValidationError", Details = "the token is invalid" });
+            }
 
             try
             {

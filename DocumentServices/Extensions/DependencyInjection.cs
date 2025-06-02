@@ -1,10 +1,13 @@
-﻿using DocumentService.Interface;
+﻿using DocumentService.Infrastructure.Authentication;
+using DocumentService.Interface;
 using DocumentService.Models;
 using DocumentService.Service;
 using DocumentService.Services;
 using DocumentServices.Interface.GetFIleServiceInterface;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace DocumentService.Extensions
@@ -22,7 +25,35 @@ namespace DocumentService.Extensions
             services.AddScoped<IIAMAuthService, IAMAuthService>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddAuthentication("IamScheme")
+            .AddScheme<AuthenticationSchemeOptions, IamTokenAuthenticationHandler>("IamScheme", options => { });
+
+            services.AddAuthorization();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Enter token received from IAM. Example: Bearer {token}",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+        {
+            new OpenApiSecurityScheme{
+                Reference = new OpenApiReference{
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+            });
+
             services.Configure<IAMSettings>(configuration.GetSection("IAM"));
             services.Configure<AuthConfiguration>(configuration.GetSection("AuthConfiguration"));
             services.AddScoped<IAnnotatedFileService, AnnotatedFileService>();

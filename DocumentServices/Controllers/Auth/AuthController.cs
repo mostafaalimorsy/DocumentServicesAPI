@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentServices.Controllers.Auth
 {
-
+    
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase

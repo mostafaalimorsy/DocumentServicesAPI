@@ -19,7 +19,7 @@ namespace DocumentService.Services
             _authSettings = authOptions.Value;
         }
 
-        public async Task<TokenResponse> AuthenticateAsync(string username, string password)
+        public async Task<LoginResponse> AuthenticateAsync(string username, string password)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"{_iamSettings.Url}/connect/token");
 
@@ -42,7 +42,7 @@ namespace DocumentService.Services
             }
 
             var json = await response.Content.ReadAsStringAsync();
-            var token = JsonSerializer.Deserialize<TokenResponse>(json, new JsonSerializerOptions
+            var token = JsonSerializer.Deserialize<LoginResponse>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });

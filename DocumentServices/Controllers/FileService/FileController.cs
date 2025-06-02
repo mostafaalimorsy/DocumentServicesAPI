@@ -19,7 +19,7 @@ namespace DocumentService.Controllers.FileService
         }
 
         [HttpGet("pdf")]
-        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FileAsPdfResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
       
@@ -28,7 +28,7 @@ namespace DocumentService.Controllers.FileService
         {
 
             if (!ModelState.IsValid)
-                return BadRequest(new ErrorResponse { Error = "ValidationError", Details = "" });
+                return BadRequest(new ErrorResponse { Error = "ValidationError", Details = "the token is invalid" });
 
 
             try
@@ -45,22 +45,23 @@ namespace DocumentService.Controllers.FileService
                     ConvertedFileName = Path.GetFileNameWithoutExtension(request.FileName) + ".pdf",
                     ContentType = contentType,
                     FileBytes = Convert.ToBase64String(fileBytes),
-                    FileUrl = fileUrl
+                    FileUrl = fileUrl,
+                    Annotation = new List<string> {}
                 };
 
                 return Ok(response);
             }
             catch (FileNotFoundException)
             {
-                return NotFound(new ErrorResponse { Error = "FileNotFound" });
+                return NotFound(new ErrorResponse { Error = "FIle Not Found", Details = "FileNotFound" });
             }
             catch (NotSupportedException ex)
             {
-                return BadRequest(new ErrorResponse { Error = ex.Message });
+                return BadRequest(new ErrorResponse { Error = "File Extenission not supported", Details = ex.Message });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ErrorResponse { Error = "ServerError", Details = ex.Message });
+                return StatusCode(500, new ErrorResponse { Error = "Server Error", Details = ex.Message });
             }
         }
     }

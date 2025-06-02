@@ -4,7 +4,7 @@ namespace DocumentService.Interface
 {
     public interface IIAMAuthService
     {
-        Task<TokenResponse> AuthenticateAsync(string username, string password);
+        Task<LoginResponse> AuthenticateAsync(string username, string password);
     }
 
 }

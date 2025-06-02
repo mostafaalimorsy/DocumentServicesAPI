@@ -28,7 +28,6 @@ DocumentServices.sln
 - **Aspose.Total** (for file conversion & PDF processing)
 - **Swagger / Swashbuckle** (API docs & testing)
 - **Dependency Injection** (built-in)
-- **Model Validation** using `System.ComponentModel.DataAnnotations`
 - **File Upload & Storage** via `wwwroot/files`
 - **Error Handling** using custom `ErrorResponseDto`
 
@@ -70,9 +69,9 @@ The token is validated by a custom `IamTokenAuthenticationHandler` middleware an
    dotnet restore
    ```
 
-3. **Set `DocumentServices.Host` as the startup project** (in Visual Studio or CLI):
+3. **Set `DocumentServices` as the startup project** (in Visual Studio or CLI):
    ```bash
-   cd DocumentServices.Host
+   cd DocumentServices
    dotnet run
    ```
 
@@ -116,12 +115,6 @@ You can use:
 - Centralized logging with Serilog or ELK
 - Docker support
 - Unit and integration test coverage
-
----
-
-## 👥 Contributors
-
-- **Mahmoud Morsy** — Senior SE
 
 ---
 

@@ -12,8 +12,9 @@ namespace DocumentService.Services
         private readonly IAMSettings _iamSettings;
         private readonly AuthConfiguration _authSettings;
 
-        public IAMAuthService(IHttpClientFactory httpClientFactory, IOptions<IAMSettings> iamOptions, IOptions<AuthConfiguration> authOptions)
+        public IAMAuthService(IHttpClientFactory httpClientFactory, Microsoft.Extensions.Options.IOptions<IAMSettings> iamOptions, IOptions<AuthConfiguration> authOptions)
         {
+           
             _client = httpClientFactory.CreateClient();
             _iamSettings = iamOptions.Value;
             _authSettings = authOptions.Value;

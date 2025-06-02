@@ -1,5 +1,4 @@
 ﻿using DocumentService.Interface.FileService;
-
 namespace DocumentService.Services.FileService
 {
     public class FileService : IFileService

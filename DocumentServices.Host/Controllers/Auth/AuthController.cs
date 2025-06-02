@@ -25,7 +25,7 @@ namespace DocumentServices.Controllers.Auth
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
-                return BadRequest(new ErrorResponse { Error = "MissingUsernameOrPassword" });
+                return BadRequest(new ErrorResponse { Error = "MissingUsernameOrPassword" , Details = "one or both user name/ password is wrong"});
 
             try
             {
@@ -34,7 +34,7 @@ namespace DocumentServices.Controllers.Auth
             }
             catch (Exception ex)
             {
-                return Unauthorized(new ErrorResponse { Error = "IAMError", Details = ex.Message });
+                return Unauthorized(new ErrorResponse { Error = "UnAuthroized", Details = "after conntect with IAM your credintionl is wrong" });
             }
         }
     }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="23.8.0" />
+    <PackageReference Include="Aspose.Imaging" Version="23.8.0" />
+    <PackageReference Include="Aspose.PDF" Version="23.8.0" />
+    <PackageReference Include="Aspose.Words" Version="23.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocumentServices.Domain\DocumentServices.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,17 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Licences\Intalio.Core.Aspose.Total.Product.Family 1.lic" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Properties\launchSettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Licences\Intalio.Core.Aspose.Total.Product.Family 1.lic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,4 +23,9 @@
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DocumentServices.Application\DocumentServices.Application.csproj" />
+	<ProjectReference Include="..\DocumentServices.Infrastructure\DocumentServices.Infrastructure.csproj" />
+   
+  </ItemGroup>
 </Project>

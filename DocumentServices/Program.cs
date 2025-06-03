@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddScoped<IFileService, FileService>();
 AsposeLicenseHelper.ApplyLicenses();
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 
 app.UseSwagger();

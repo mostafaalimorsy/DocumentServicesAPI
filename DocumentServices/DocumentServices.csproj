@@ -33,4 +33,11 @@
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
+<ItemGroup>
+  <Content Include="Files\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+
+
 </Project>

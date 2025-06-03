@@ -28,4 +28,10 @@
 	<ProjectReference Include="..\DocumentServices.Infrastructure\DocumentServices.Infrastructure.csproj" />
    
   </ItemGroup>
+
+  <ItemGroup>
+  <Content Include="Files\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
 </Project>

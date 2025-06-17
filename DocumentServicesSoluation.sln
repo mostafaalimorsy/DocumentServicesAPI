@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentServices.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentServices.Infrastructure", "DocumentServices.Infrastructure\DocumentServices.Infrastructure.csproj", "{B6B9810F-63CE-42D5-AFB8-C6D25ED8640F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentServices", "DocumentServices.Host\DocumentServices.csproj", "{197365FA-16EB-4E76-A3CC-9F4C149B080E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentServices", "DocumentServices\DocumentServices.csproj", "{197365FA-16EB-4E76-A3CC-9F4C149B080E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32A3C528-DEC6-4679-8FE7-A4918063EB11} = {32A3C528-DEC6-4679-8FE7-A4918063EB11}
 	EndProjectSection

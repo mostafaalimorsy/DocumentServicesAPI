@@ -96,7 +96,7 @@ builder.Services.AddScoped<IIAMAuthService, IAMAuthService>();
 builder.Services.AddScoped<IAnnotatedFileService, AnnotatedFileService>();
 
 AsposeLicenseHelper.ApplyLicenses();
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+//builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 app.UseStaticFiles();
 

@@ -1,3 +1,4 @@
+using Aspose.Cells.Charts;
 using DocumentService.Infrastructure.Authentication;
 using DocumentService.Interface;
 using DocumentService.Interface.FileService;
@@ -6,7 +7,9 @@ using DocumentService.Models;
 using DocumentService.Service;
 using DocumentService.Services;
 using DocumentService.Services.FileService;
+using DocumentServices.Application.Interface.ExternalDocumnetDowmloaded;
 using DocumentServices.Interface.GetFIleServiceInterface;
+using DocumentServices.Services.ExternalDocumentDownloaded;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
@@ -94,6 +97,11 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IIAMAuthService, IAMAuthService>();
 builder.Services.AddScoped<IAnnotatedFileService, AnnotatedFileService>();
+builder.Services.AddHttpClient< IExternalDocumentService,ExternalDocumentService >().ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
+
 
 AsposeLicenseHelper.ApplyLicenses();
 //builder.WebHost.UseUrls("http://0.0.0.0:5000");

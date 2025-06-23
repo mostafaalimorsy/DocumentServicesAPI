@@ -18,8 +18,9 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
         }
         public async Task<ExternalFileAsPdfResponse> DownloadFileFromExternalApiAsync(ExternalFileDownloadRequest request, string userToken)
         {
-            // get the file data from the external API
-            var url = "https://upgrade-viewer.evergulf.com/UVIEWER/api/document/11/version/5.0/details?&caseDocumentId=14&caseTaskId=45&delegationId=null&isDraft=false";
+            //// get the file data from the external API
+            //var url = "https://upgrade-portal.evergulf.com/File/ListByDocumentId?documentId=14";
+            var url = "https://upgrade-viewer.evergulf.com/UVIEWER/api/document/11/version/12.0/details?&caseDocumentId=14&caseTaskId=45&delegationId=null&isDraft=false";
 
             var dataRequest = new HttpRequestMessage(HttpMethod.Get, url);
             dataRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
@@ -30,7 +31,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
             if (!dataResponse.IsSuccessStatusCode)
                 throw new Exception($"External API Error: {dataResponse.StatusCode}. {content}");
 
-            dynamic fullResponse = JsonConvert.DeserializeObject<dynamic>(content);
+            ExternalFileAsPdfResponse fullResponse = JsonConvert.DeserializeObject<ExternalFileAsPdfResponse>(content);
 
 
 
@@ -38,8 +39,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
 
             // get the base65 PDF file from the external API
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get,
-                "https://upgrade-viewer.evergulf.com/UVIEWER/api/document/11/version/T_7.0/view");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://upgrade-portal.evergulf.com/File/Download?id=11&fromForm=true");
 
             httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
 
@@ -54,13 +54,10 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
             var bytes = await response.Content.ReadAsByteArrayAsync(); // since it returns a PDF
             return new ExternalFileAsPdfResponse
             {
-                FileName = fullResponse.filename,
-                Annotations = JsonConvert.DeserializeObject<List<AnnotationRequest>>(fullResponse.annotations.ToString()),
-                Signatures = JsonConvert.DeserializeObject<List<SignatureDto>>(fullResponse.signatures.ToString()),
-                Permissions = new PermissionsDto
-                {
-                    All = JsonConvert.DeserializeObject<Dictionary<string, bool>>(fullResponse.permissions.ToString())
-                },
+                FileName = fullResponse.FileName,
+                Annotations = fullResponse.Annotations,
+                Signatures = fullResponse.Signatures,
+                Permissions = fullResponse.Permissions,
                 Base64Pdf = Convert.ToBase64String(bytes) // Convert byte[] to Base64 string
             };
         }

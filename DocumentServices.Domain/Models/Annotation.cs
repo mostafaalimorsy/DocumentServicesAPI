@@ -8,14 +8,30 @@ namespace DocumentServices.Domain.Models
 {
     public class Annotation
     {
-        public string Id { get; set; }
-        public string AnnotationType { get; set; }
+
+
+
+        public string BackgroundColor { get; set; }
+        public string BorderColor { get; set; }
         public int PageNumber { get; set; }
-        public Position Position { get; set; }
-        public Size Size { get; set; }
-        public string Color { get; set; }
-        public string Author { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string AddedByUser { get; set; }
+        public string Type { get; set; }
+        public DateTime DateAdded { get; set; }
+        public float PosX { get; set; }
+        public float PosY { get; set; }
+        public float PosZ { get; set; }
+        public float BorderWidth { get; set; }
+        public float Width { get; set; }
+        public float Height { get; set; }
+        public int Id { get; set; }
+        public string Guid { get; set; }
+        public float Opacity { get; set; }
+        public bool Locked { get; set; }
+        public string Text { get; set; }
+        public string ImageSource { get; set; }
+        public string AnnotationTextFormat { get; set; }
+        public string AddedByUserName { get; set; }
+
     }
 
     public class Position

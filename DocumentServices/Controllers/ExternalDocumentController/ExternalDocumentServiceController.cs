@@ -37,7 +37,7 @@ namespace DocumentServices.Controllers.ExternalDocumentController
             }
             catch (Exception ex)
             {
-                return Unauthorized(new ErrorResponse { Error = "Error", Details =ex.Message });
+                return Unauthorized(new ErrorResponse { Error = "Error", Details = ex.Message });
             }
            
         }

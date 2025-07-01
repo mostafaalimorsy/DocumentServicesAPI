@@ -10,7 +10,9 @@ namespace DocumentServices.Application.Interface.ExternalDocumnetDowmloaded
 {
     public interface IViewerService
     {
-        Task<string> SaveSignatureAsync(SignatureRequestDto request, String userToken);
-        Task<string> SaveAnnotationAsync(AnnotationRequestDto request,String userToken);
+        Task<string> SaveSignatureAsync(SignatureRequestDto request, string userToken, string externalFileId, string versionNumber);
+        Task<string> SaveAnnotationAsync(AnnotationRequestDto request,string userToken, string externalFileId, string versionNumber);
+        Task<string> CheckOutViewer(ChecksRequestDTO request,string userToken);
+        Task<string> CheckInViewer(ChecksRequestDTO request,string userToken);
     }
 }

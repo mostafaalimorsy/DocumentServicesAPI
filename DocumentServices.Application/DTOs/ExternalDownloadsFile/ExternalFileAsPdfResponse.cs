@@ -13,6 +13,7 @@ namespace DocumentServices.Application.DTOs.ExternalDonloadsFile
     {
         public string? FileName { get; set; }
         public string? Base64Pdf { get; set; }
+        public string? VersionCode { get; set; }
 
         
         public List<Annotation>? Annotations { get; set; }

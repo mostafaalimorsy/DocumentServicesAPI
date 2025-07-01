@@ -29,6 +29,8 @@ namespace DocumentServices.Domain.Models
 
     public class AnnotationRequestDto
     {
+        public List<string> DeletedAnnotations { get; set; }
+
         public List<Annotation> Annotations { get; set; }
     }
 }

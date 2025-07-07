@@ -1,6 +1,8 @@
-﻿using DocumentService.DTOs;
+﻿using Aspose.Pdf.Operators;
+using DocumentService.DTOs;
 using DocumentServices.Application.DTOs.ExternalDownloadsFile;
 using DocumentServices.Application.Interface.ExternalDocumnetDowmloaded;
+using DocumentServices.Domain.Helper;
 using DocumentServices.Domain.Models;
 using DocumentServices.Infrastructure.External;
 using DocumentServices.Services;
@@ -19,22 +21,37 @@ namespace DocumentServices.Controllers.ExternalDocumentController
             _manager = manager;
         }
 
-       
+
         [HttpPost("signature")]
         [ProducesResponseType(typeof(ExternalFileUpdate), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> SaveSignature([FromBody] SignatureRequestDto request, string externalFileId, string versionNumber)
         {
-            var userToken = Request.Headers["Authorization"].ToString();
-
-            var result =
-            await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
+            try
             {
-                return await _manager.SaveSignature(request, userToken, externalFileId, version);
-            });
+                var userToken = Request.Headers["Authorization"].ToString();
+                if (string.IsNullOrWhiteSpace(userToken))
+                {
+                    return Unauthorized(new ErrorResponse {Error = "UnAuthroize", Details = "un authroize found" });
+                }
+                if (string.IsNullOrWhiteSpace(externalFileId) || string.IsNullOrWhiteSpace(versionNumber))
+                {
+                    return BadRequest(new ErrorResponse { Error = "data missing", Details = "should check the data" });
+                }
 
-            return Ok(result);
+                var result =
+                await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
+                {
+                    return await _manager.SaveSignature(request, userToken, externalFileId, version);
+                });
+
+                return Ok(result);
+            }
+            catch (ErrorException ex)
+            {
+                return BadRequest(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
+            }
         }
         //[HttpPost("checkout")]
         //public async Task<IActionResult> CheckOutViewer([FromBody] ChecksRequestDTO request)
@@ -80,14 +97,30 @@ namespace DocumentServices.Controllers.ExternalDocumentController
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> SaveAnnotation([FromBody] AnnotationRequestDto request, string externalFileId, string versionNumber)
         {
-            var userToken = Request.Headers["Authorization"].ToString();
-            var result = 
-            await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
-            {
-                return await _manager.SaveAnnotation(request, userToken, externalFileId, version);
-            });
+           try {
 
-            return Ok(result);
+                var userToken = Request.Headers["Authorization"].ToString();
+                if (string.IsNullOrWhiteSpace(userToken))
+                {
+                    return Unauthorized(new ErrorResponse { Error = "UnAuthroize", Details = "un authroize found" });
+                }
+
+                if (string.IsNullOrWhiteSpace(externalFileId) || string.IsNullOrWhiteSpace(versionNumber))
+                {
+                    return BadRequest(new ErrorResponse { Error = "data missing", Details = "should check the data" });
+                }
+                var result =
+                await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
+                {
+                    return await _manager.SaveAnnotation(request, userToken, externalFileId, version);
+                });
+
+                return Ok(result);
+            }
+            catch (ErrorException ex)
+            {
+                return BadRequest(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
+            }
         }
     }
 

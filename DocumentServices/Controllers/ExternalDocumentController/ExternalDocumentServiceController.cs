@@ -42,7 +42,7 @@ namespace DocumentServices.Controllers.ExternalDocumentController
             }
             catch (ErrorException ex)
             {
-                return Unauthorized(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
+                return BadRequest(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
             }
            
         }

@@ -12,8 +12,8 @@ namespace DocumentServices.Application.DTOs.ExternalDonloadsFile
         [Required(ErrorMessage = "FileId is required")]
         public string? ExternalFileId { get; set; }
         [Required(ErrorMessage = "FileId is required")]
-        public string? VersionNumber { get; set; }
-        [Required(ErrorMessage = "FileId is required")]
+
         public string? DocumentId { get; set; }
+
     }
 }

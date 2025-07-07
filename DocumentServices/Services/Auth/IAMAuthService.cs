@@ -1,6 +1,7 @@
 ﻿using DocumentService.DTOs;
 using DocumentService.Interface;
 using DocumentService.Models;
+using DocumentServices.Domain.Helper;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
@@ -39,7 +40,14 @@ namespace DocumentService.Services
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"IAM error: {error}");
+                using var doc = JsonDocument.Parse(error);
+                var root = doc.RootElement;
+                ErrorResponse errorResponse = new ErrorResponse
+                {
+                    Error = root.GetProperty("error").GetString(),
+                    Details = root.GetProperty("error_description").GetString()
+                };
+                throw new ErrorException(errorResponse);
             }
 
             var json = await response.Content.ReadAsStringAsync();

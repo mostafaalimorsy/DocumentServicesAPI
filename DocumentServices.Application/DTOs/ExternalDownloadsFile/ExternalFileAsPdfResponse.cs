@@ -17,7 +17,7 @@ namespace DocumentServices.Application.DTOs.ExternalDonloadsFile
 
         
         public List<Annotation>? Annotations { get; set; }
-        public List<SignatureDto>? Signatures { get; set; }
+        public List<SignatureItemDto>? Signatures { get; set; }
         public PermissionsDto? Permissions { get; set; }
     }
 }

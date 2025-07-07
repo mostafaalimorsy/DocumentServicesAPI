@@ -1,5 +1,6 @@
 ﻿using DocumentService.DTOs;
 using DocumentService.Interface;
+using DocumentServices.Domain.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,9 +33,9 @@ namespace DocumentServices.Controllers.Auth
                 var token = await _iamauthService.AuthenticateAsync(request.Username, request.Password);
                 return Ok(token);
             }
-            catch (Exception ex)
+            catch (ErrorException ex)
             {
-                return Unauthorized(new ErrorResponse { Error = "UnAuthroized", Details = "after conntect with IAM your credintionl is wrong" });
+                return Unauthorized(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
             }
         }
     }

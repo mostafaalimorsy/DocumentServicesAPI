@@ -1,6 +1,8 @@
 ﻿using DocumentService.DTOs;
 using DocumentServices.Application.DTOs.ExternalDonloadsFile;
+using DocumentServices.Application.DTOs.ExternalDownloadsFile;
 using DocumentServices.Application.Interface.ExternalDocumnetDowmloaded;
+using DocumentServices.Domain.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,9 @@ namespace DocumentServices.Controllers.ExternalDocumentController
         }
 
         [HttpPost("external-download")]
+        [ProducesResponseType(typeof(ExternalFileAsPdfResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DownloadExternal([FromBody] ExternalFileDownloadRequest request)
         {
             if (!ModelState.IsValid)
@@ -35,9 +40,9 @@ namespace DocumentServices.Controllers.ExternalDocumentController
 
                 return Ok(response);
             }
-            catch (Exception ex)
+            catch (ErrorException ex)
             {
-                return Unauthorized(new ErrorResponse { Error = "Error", Details = ex.Message });
+                return Unauthorized(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
             }
            
         }

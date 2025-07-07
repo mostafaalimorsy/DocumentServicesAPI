@@ -22,6 +22,16 @@ namespace DocumentServices.Services
             => _viewerService.CheckOutViewer( request,userToken);
         public Task<string> CheckinViewer(ChecksRequestDTO request, string userToken)
             => _viewerService.CheckInViewer(request, userToken);
+
+        public Task<string> ProcessViewerUpdate(string userToken,
+        string externalFileId,
+        string versionNumber,
+        Func<string, Task<string>> actionToPerform)
+             => _viewerService.ProcessViewerUpdate(
+         userToken,
+         externalFileId,
+         versionNumber,
+       actionToPerform);
     }
 
 }

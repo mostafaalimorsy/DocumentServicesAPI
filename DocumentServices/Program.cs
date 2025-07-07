@@ -107,7 +107,7 @@ builder.Services.AddHttpClient<IViewerService, ViewerService>();
 builder.Services.AddScoped<ViewerManager>();
 
 AsposeLicenseHelper.ApplyLicenses();
-//builder.WebHost.UseUrls("http://0.0.0.0:5000");
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 app.UseStaticFiles();
 

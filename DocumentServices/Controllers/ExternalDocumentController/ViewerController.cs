@@ -53,43 +53,43 @@ namespace DocumentServices.Controllers.ExternalDocumentController
                 return BadRequest(new ErrorResponse { Error = ex.ErrorResponse.Error, Details = ex.ErrorResponse.Details });
             }
         }
-        //[HttpPost("checkout")]
-        //public async Task<IActionResult> CheckOutViewer([FromBody] ChecksRequestDTO request)
-        //{
-        //    try
-        //    {
-        //        var token = Request.Headers["Authorization"].ToString().Replace("Bearer", "");
+        [HttpPost("checkout")]
+        public async Task<IActionResult> CheckOutViewer([FromBody] ChecksRequestDTO request)
+        {
+            try
+            {
+                var token = Request.Headers["Authorization"].ToString();
 
-        //        if (string.IsNullOrWhiteSpace(token))
-        //            return Unauthorized("Missing or invalid Bearer token");
+                if (string.IsNullOrWhiteSpace(token))
+                    return Unauthorized("Missing or invalid Bearer token");
 
-        //        var result = await _manager.CheckOutViewer(request, token);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest( new ErrorResponse { Error = "Checkout failed", Details = ex.Message });
-        //    }
-        //}
+                var result = await _manager.CheckOutViewer(request, token);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorResponse { Error = "Checkout failed", Details = ex.Message });
+            }
+        }
 
-        //[HttpPost("checkin")]
-        //public async Task<IActionResult> CheckinViewer([FromBody] ChecksRequestDTO request)
-        //{
-        //    try
-        //    {
-        //        var token = Request.Headers["Authorization"].ToString().Replace("Bearer", "");
+        [HttpPost("checkin")]
+        public async Task<IActionResult> CheckinViewer([FromBody] ChecksRequestDTO request)
+        {
+            try
+            {
+                var token = Request.Headers["Authorization"].ToString();
 
-        //        if (string.IsNullOrWhiteSpace(token))
-        //            return Unauthorized("Missing or invalid Bearer token");
+                if (string.IsNullOrWhiteSpace(token))
+                    return Unauthorized("Missing or invalid Bearer token");
 
-        //        var result = await _manager.CheckinViewer(request, token);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new ErrorResponse { Error = "Checkin failed", Details = ex.Message });
-        //    }
-        //}
+                var result = await _manager.CheckinViewer(request, token);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorResponse { Error = "Checkin failed", Details = ex.Message });
+            }
+        }
 
         [HttpPost("annotation")]
         [ProducesResponseType(typeof(ExternalFileUpdate), StatusCodes.Status200OK)]

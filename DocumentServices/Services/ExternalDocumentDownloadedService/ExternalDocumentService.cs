@@ -22,7 +22,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
         public async Task<ExternalFileAsPdfResponse> DownloadFileFromExternalApiAsync(ExternalFileDownloadRequest request, string userToken)
         {
             //get the version code from the external API
-            var urlVersion = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/versions?&caseDocumentId={request.DocumentId}&caseTaskId=45&delegationId=null&isDraft=false";
+            var urlVersion = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/versions?&caseDocumentId={request.DocumentId}&caseTaskId=49&delegationId=null&isDraft=false";
             var urlVersionDataRequest = new HttpRequestMessage(HttpMethod.Get, urlVersion);
             urlVersionDataRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
             var urlVersionDataResponse = await _httpClient.SendAsync(urlVersionDataRequest);
@@ -68,7 +68,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
 
             //// get the file data from the external API
             //var url = "https://upgrade-portal.evergulf.com/File/ListByDocumentId?documentId=14";
-            var url = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/version/{latestVersion}/details?&caseDocumentId={request.DocumentId}&caseTaskId=45&delegationId=null&isDraft=false";
+            var url = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/version/{latestVersion}/details?&caseDocumentId={request.DocumentId}&caseTaskId=49&delegationId=null&isDraft=false";
 
             var dataRequest = new HttpRequestMessage(HttpMethod.Get, url);
             dataRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);

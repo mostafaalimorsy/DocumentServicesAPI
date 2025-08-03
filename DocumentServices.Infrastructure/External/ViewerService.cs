@@ -212,65 +212,49 @@ namespace DocumentServices.Infrastructure.External
 
             string? version = null;
             // 1. Call CheckOutViewer
-           
-                try
-                {
-
-                    // 1. Call CheckOutViewer
-                    var checkOutResponse = await CheckOutViewer(new ChecksRequestDTO
-                    {
-                        ExternalFileId = externalFileId,
-                        VersionNumber = versionNumber // placeholder
-                    }, userToken);
-
-                    var jsonObject = JsonDocument.Parse(checkOutResponse);
-                    version = jsonObject.RootElement.GetProperty("version").GetString();
-
-                    if (string.IsNullOrWhiteSpace(version))
-                    {
-                        var errorResponse = new ErrorResponse
-                        {
-                            Error = "checkout failed",
-                            Details = "Failed to retrieve version from CheckOutViewer response"
-                        };
-
-                        // Serialize the ErrorResponse object to a JSON string
-                        throw new ErrorException(errorResponse);
-                    }
-
-                }
-                catch (ErrorException ex)
-                {
-                    throw new ErrorException(ex.ErrorResponse);
-
-
-                }
-            
-       
-            // 2. Perform the requested action (signature or annotation)
 
             try
             {
-                 var actionResult = await actionToPerform(version);
-            }
-            catch (ErrorException ex) {
-                throw new ErrorException(ex.ErrorResponse);
-            }
-            // 3. Call CheckInViewer
-            try
-            {
+
+                // 1. Call CheckOutViewer
+                var checkOutResponse = await CheckOutViewer(new ChecksRequestDTO
+                {
+                    ExternalFileId = externalFileId,
+                    VersionNumber = versionNumber // placeholder
+                }, userToken);
+
+                var jsonObject = JsonDocument.Parse(checkOutResponse);
+                version = jsonObject.RootElement.GetProperty("version").GetString();
+
+                if (string.IsNullOrWhiteSpace(version))
+                {
+                    var errorResponse = new ErrorResponse
+                    {
+                        Error = "checkout failed",
+                        Details = "Failed to retrieve version from CheckOutViewer response"
+                    };
+
+                    // Serialize the ErrorResponse object to a JSON string
+                    throw new ErrorException(errorResponse);
+                }
+                //2- action
+                var actionResult = await actionToPerform(version);
+                //3- checkin
                 await CheckInViewer(new ChecksRequestDTO
                 {
                     ExternalFileId = externalFileId,
                     VersionNumber = version
                 }, userToken);
 
-          
             }
             catch (ErrorException ex)
             {
                 throw new ErrorException(ex.ErrorResponse);
+
+
             }
+
+
 
             // 4. Return the result of the action
             var successResponse = new ExternalFileUpdate

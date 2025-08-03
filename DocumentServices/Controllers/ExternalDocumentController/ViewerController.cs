@@ -41,10 +41,7 @@ namespace DocumentServices.Controllers.ExternalDocumentController
                 }
 
                 var result =
-                await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
-                {
-                    return await _manager.SaveSignature(request, userToken, externalFileId, version);
-                });
+                await _manager.SaveSignature(request, userToken, externalFileId, versionNumber);
 
                 return Ok(result);
             }
@@ -110,10 +107,7 @@ namespace DocumentServices.Controllers.ExternalDocumentController
                     return BadRequest(new ErrorResponse { Error = "data missing", Details = "should check the data" });
                 }
                 var result =
-                await _manager.ProcessViewerUpdate(userToken, externalFileId, versionNumber, async (version) =>
-                {
-                    return await _manager.SaveAnnotation(request, userToken, externalFileId, version);
-                });
+                await _manager.SaveAnnotation(request, userToken, externalFileId, versionNumber);
 
                 return Ok(result);
             }

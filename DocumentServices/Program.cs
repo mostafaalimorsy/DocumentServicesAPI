@@ -7,6 +7,7 @@ using DocumentService.Models;
 using DocumentService.Service;
 using DocumentService.Services;
 using DocumentService.Services.FileService;
+using DocumentServices.Application.Interface;
 using DocumentServices.Application.Interface.ExternalDocumnetDowmloaded;
 using DocumentServices.Infrastructure.External;
 using DocumentServices.Interface.GetFIleServiceInterface;
@@ -36,6 +37,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor(); 
+
 builder.Services.Configure<IAMSettings>(builder.Configuration.GetSection("IAM"));
 builder.Services.Configure<AuthConfiguration>(builder.Configuration.GetSection("AuthConfiguration"));
 builder.Services.AddAuthentication("IamScheme")
@@ -105,9 +108,13 @@ builder.Services.AddHttpClient< IExternalDocumentService,ExternalDocumentService
 });
 builder.Services.AddHttpClient<IViewerService, ViewerService>();
 builder.Services.AddScoped<ViewerManager>();
+builder.Services.AddHttpClient<INodeService, NodeService>();
+builder.Services.AddHttpClient<IDraftService, DraftService>();
+builder.Services.AddHttpClient<IDocumentRoutingService, DocumentRoutingService>();
+builder.Services.AddHttpClient<IDocumentFileGroupService, DocumentFileGroupService>();
 
 AsposeLicenseHelper.ApplyLicenses();
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+//builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 app.UseStaticFiles();
 

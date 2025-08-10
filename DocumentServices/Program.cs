@@ -114,7 +114,7 @@ builder.Services.AddHttpClient<IDocumentRoutingService, DocumentRoutingService>(
 builder.Services.AddHttpClient<IDocumentFileGroupService, DocumentFileGroupService>();
 
 AsposeLicenseHelper.ApplyLicenses();
-//builder.WebHost.UseUrls("http://0.0.0.0:5000");
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 app.UseStaticFiles();
 

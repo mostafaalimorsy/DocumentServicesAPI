@@ -14,7 +14,7 @@ namespace DocumentServices.Application.DTOs
         public long FileSize { get; set; }
         public string Extension { get; set; }
         public string ContentType { get; set; }
-        public bool IsLocked { get; set; }
+        public bool? IsLocked { get; set; }
         public int? TaskId { get; set; }
         public bool? IsSigned { get; set; }
     }

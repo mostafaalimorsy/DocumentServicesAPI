@@ -22,7 +22,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
         public async Task<ExternalFileAsPdfResponse> DownloadFileFromExternalApiAsync(ExternalFileDownloadRequest request, string userToken)
         {
             //get the version code from the external API
-            var urlVersion = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/versions?&caseDocumentId={request.DocumentId}&caseTaskId=49&delegationId=null&isDraft=false";
+            var urlVersion = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/versions?&caseDocumentId={request.DocumentId}&caseTaskId={request.CaseTaskId}&delegationId=null&isDraft=false";
             var urlVersionDataRequest = new HttpRequestMessage(HttpMethod.Get, urlVersion);
             urlVersionDataRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
             var urlVersionDataResponse = await _httpClient.SendAsync(urlVersionDataRequest);
@@ -70,6 +70,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
             //var url = "https://upgrade-portal.evergulf.com/File/ListByDocumentId?documentId=14";
             var url = $"https://upgrade-viewer.evergulf.com/UVIEWER/api/document/{request.ExternalFileId}/version/{latestVersion}/details?&caseDocumentId={request.DocumentId}&caseTaskId=49&delegationId=null&isDraft=false";
 
+        https://upgrade-viewer.evergulf.com/UVIEWER/api/document/15/version/1.0/details?&caseDocumentId=16&caseTaskId=50&delegationId=null&isDraft=false
             var dataRequest = new HttpRequestMessage(HttpMethod.Get, url);
             dataRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
 
@@ -87,7 +88,17 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
 
                 throw new ErrorException(errorContent);
             }
-            ExternalFileAsPdfResponse fullResponse = JsonConvert.DeserializeObject<ExternalFileAsPdfResponse>(content);
+            ExternalFileAsPdfResponse fullResponse = new ExternalFileAsPdfResponse();
+
+            if (content == "")
+            {
+               fullResponse = new ExternalFileAsPdfResponse();
+            }
+            else
+            {
+                fullResponse = JsonConvert.DeserializeObject<ExternalFileAsPdfResponse>(content);
+
+            }
 
 
 
@@ -120,7 +131,7 @@ namespace DocumentServices.Services.ExternalDocumentDownloaded
                 Annotations = fullResponse.Annotations,
                 Signatures = fullResponse.Signatures,
                 Permissions = fullResponse.Permissions,
-                VersionCode =fullResponse.VersionCode,
+                VersionCode =fullResponse.VersionCode ?? latestVersion,
                 Base64Pdf = Convert.ToBase64String(bytes) // Convert byte[] to Base64 string
             };
         }

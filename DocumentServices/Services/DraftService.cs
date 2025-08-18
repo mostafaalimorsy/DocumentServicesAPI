@@ -16,7 +16,26 @@ namespace DocumentServices.Services
 
         public async Task<DraftCountDto> GetDraftCountsAsync(int nodeId, string userToken)
         {
-            var url = $"https://upgrade-portal.evergulf.com/Task/GetInboxCounts?nodeId={nodeId}";
+            var baseUrl = "Task/GetInboxCounts";
+            if (nodeId == 1)
+            {
+                baseUrl = "Document/GetDraftCounts";
+            }
+            else if (nodeId == 3 || nodeId == 14)
+            {
+                baseUrl = "Task/GetCompletedCounts";
+            }
+            else if (nodeId == 6) {
+                baseUrl = "Document/GetClosedCounts";
+                
+            }
+            else
+            {
+
+                 baseUrl = "Task/GetInboxCounts";
+            }
+
+                var url = $"https://upgrade-portal.evergulf.com/{baseUrl}?nodeId={nodeId}";
 
         
             var request = new HttpRequestMessage(HttpMethod.Get, url);
